@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "AMA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+     	"item": "minecraft:apple"
+    },
+    "M": {
+  		"item": "minecraft:milk_bucket"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:milk_apple",
+    "count": 8
+  }
+}

@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ABA",
+		"ATA",
+		"III"
+	],
+	"key": {
+		"T": {
+			"item": "minecraft:totem_of_undying"
+		},
+		"A": {
+			"item": "minecraft:enchanted_golden_apple"
+		},
+		"I": {
+			"item": "minecraft:iron_block"
+		},
+		"B": {
+			"item": "minecraft:beacon"
+		}
+	},
+	"result": {
+		"item": "powerfultotems:beacon_totem"
+	}
+}

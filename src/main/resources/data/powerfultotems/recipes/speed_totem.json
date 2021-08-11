@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:sugar"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:speed_totem"
+  }
+}

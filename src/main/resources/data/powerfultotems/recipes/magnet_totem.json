@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ITI",
+    "III"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "I": {
+  		"item": "minecraft:iron_block"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:magnet_totem"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "AMA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+     	"item": "minecraft:sweet_berries"
+    },
+    "M": {
+  		"item": "minecraft:red_dye"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:cherry"
+  }
+}

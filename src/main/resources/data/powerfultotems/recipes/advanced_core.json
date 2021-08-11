@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "ETE",
+    "EEE"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+  	"E": {
+  		"item": "minecraft:emerald_block"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:advanced_core"
+  }
+}

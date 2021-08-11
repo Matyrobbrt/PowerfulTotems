@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "powerfultotems:item/totem/immunity/immunity_totem_weakness"
+	}
+}

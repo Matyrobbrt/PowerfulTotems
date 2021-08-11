@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "BTB",
+    "BBB"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+  	"S": {
+  		"item": "minecraft:stick"
+  	},
+  	"B": {
+  		"item": "minecraft:bricks"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:trowel_totem"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "RTR",
+    "RRR"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "R": {
+  		"item": "minecraft:firework_rocket"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:firework_totem",
+    "nbt": "{Damage:248}"
+  }
+}

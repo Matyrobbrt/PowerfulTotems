@@ -1,0 +1,17 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "powerfultotems:item/totem/immunity/immunity_totem"
+	},
+	"overrides": [
+			{ "predicate": { "custom_model_data": 0 }, "model": "powerfultotems:item/immunity_totem_none" },
+			{ "predicate": { "custom_model_data": 10}, "model": "powerfultotems:item/immunity_totem_wither" },
+			{ "predicate": { "custom_model_data": 11}, "model": "powerfultotems:item/immunity_totem_mining_fatigue" },
+			{ "predicate": { "custom_model_data": 12}, "model": "powerfultotems:item/immunity_totem_levitation" },
+			{ "predicate": { "custom_model_data": 13}, "model": "powerfultotems:item/immunity_totem_weakness" },
+			{ "predicate": { "custom_model_data": 14}, "model": "powerfultotems:item/immunity_totem_blindness" },
+			{ "predicate": { "custom_model_data": 15}, "model": "powerfultotems:item/immunity_totem_slowness" },
+			{ "predicate": { "custom_model_data": 16}, "model": "powerfultotems:item/immunity_totem_poison" },
+			{ "predicate": { "custom_model_data": 17}, "model": "powerfultotems:item/immunity_totem_hunger" }
+	]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GSG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:ender_pearl"
+  	},
+  	"S": {
+  		"item": "minecraft:purple_dye"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:teleport_totem",
+    "count": 4
+  }
+}

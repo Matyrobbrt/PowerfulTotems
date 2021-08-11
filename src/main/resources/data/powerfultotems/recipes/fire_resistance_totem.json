@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GBG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:magma_cream"
+  	},
+  	"B": {
+  		"item": "minecraft:blaze_rod"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:fire_resistance_totem"
+  }
+}

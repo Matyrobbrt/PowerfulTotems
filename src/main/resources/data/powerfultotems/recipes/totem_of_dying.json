@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:enchanted_golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:fermented_spider_eye"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:totem_of_dying"
+  }
+}

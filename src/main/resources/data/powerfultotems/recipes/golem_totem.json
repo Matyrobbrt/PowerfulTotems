@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TPT",
+    "III",
+    "TIT"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "P": {
+    	"item": "minecraft:carved_pumpkin"
+    },
+    "I": {
+    	"item": "minecraft:iron_block"
+    }
+  },
+  "result": {
+    "item": "powerfultotems:golem_totem"
+  }
+}

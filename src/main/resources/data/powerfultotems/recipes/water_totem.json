@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:iron_block"
+  	},
+  	"E": {
+  		"item": "minecraft:water_bucket"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:water_totem"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SDS",
+    "STS",
+    "SAS"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "S": {
+  		"item": "minecraft:nether_star"
+  	},
+  	"A": {
+  		"item": "minecraft:iron_horse_armor"
+  	},
+  	"D": {
+  		"item": "minecraft:dragon_head"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:flight_totem"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LSL",
+    "LTL",
+    "LLL"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "L": {
+    	"item": "minecraft:lava_bucket"
+    },
+  	"S": {
+  		"item": "minecraft:iron_ingot"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:void_totem"
+  }
+}

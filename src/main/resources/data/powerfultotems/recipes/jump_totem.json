@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GFG",
+    "ETE",
+    "GFG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:enchanted_golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:rabbit"
+  	},
+  	"F": {
+  		"item": "minecraft:rabbit_foot"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:jump_totem"
+  }
+}

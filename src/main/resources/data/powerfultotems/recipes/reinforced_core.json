@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GSG",
+    "GTG",
+    "GDG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:gold_block"
+  	},
+  	"D": {
+  		"item": "minecraft:diamond_block"
+  	},
+  	"S": {
+  		"item": "minecraft:shulker_shell"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:reinforced_core"
+  }
+}

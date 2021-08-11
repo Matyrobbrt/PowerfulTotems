@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GSG",
+    "ETE",
+    "GEG"
+  ],
+  "key": {
+    "T": {
+     	"item": "minecraft:totem_of_undying"
+    },
+    "G": {
+  		"item": "minecraft:enchanted_golden_apple"
+  	},
+  	"E": {
+  		"item": "minecraft:yellow_dye"
+  	},
+  	"S": {
+  		"item": "minecraft:nether_star"
+  	}
+  },
+  "result": {
+    "item": "powerfultotems:lightning_totem"
+  }
+}
