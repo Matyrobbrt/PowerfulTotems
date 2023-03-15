@@ -1,7 +1,7 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "powerfultotems:item/totem/immunity/immunity_totem"
+		"layer0": "powerfultotems:item/totem/immunity/immunity_totem_default"
 	},
 	"overrides": [
 			{ "predicate": { "custom_model_data": 0 }, "model": "powerfultotems:item/immunity_totem_none" },

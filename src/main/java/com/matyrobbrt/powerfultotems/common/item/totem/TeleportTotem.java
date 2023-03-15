@@ -8,21 +8,21 @@ import com.matyrobbrt.powerfultotems.core.config.TotemConfig;
 import com.matyrobbrt.powerfultotems.core.helper.NBTHelper;
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
 public class TeleportTotem extends Item {
 
@@ -31,7 +31,7 @@ public class TeleportTotem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
 
 		ItemStack stack = player.getItemInHand(hand);
 
@@ -43,14 +43,14 @@ public class TeleportTotem extends Item {
 			NBTHelper.setDouble(stack, "z", player.getZ());
 
 			if (worldIn.isClientSide)
-				player.sendMessage(new StringTextComponent("The totem has been bound to your location!"),
+				player.sendMessage(new TextComponent("The totem has been bound to your location!"),
 						player.getUUID());
 
 		} else {
 
 			if (NBTHelper.getBoolean(stack, "bound") == false) {
 				if (worldIn.isClientSide)
-					player.sendMessage(new StringTextComponent(
+					player.sendMessage(new TextComponent(
 							"The totem doesn't have a location stored! Shift right click to store your current location"),
 							player.getUUID());
 			} else if (!player.getCooldowns().isOnCooldown(this)) {
@@ -60,13 +60,13 @@ public class TeleportTotem extends Item {
 				double z = NBTHelper.getDouble(stack, "z");
 
 				if (worldIn.isClientSide) {
-					worldIn.playLocalSound(x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F,
+					worldIn.playLocalSound(x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F,
 							false);
 				} else {
-					ServerPlayerEntity playerServer = (ServerPlayerEntity) player;
+					ServerPlayer playerServer = (ServerPlayer) player;
 					playerServer.setPos(x, y, z);
-					final ServerPlayerEntity notThisPlayer = (ServerPlayerEntity) player;
-					worldIn.playSound(notThisPlayer, x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS,
+					final ServerPlayer notThisPlayer = (ServerPlayer) player;
+					worldIn.playSound(notThisPlayer, x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS,
 							1.0F, 1.0F);
 					stack.shrink(1);
 					player.getCooldowns().addCooldown(this, TotemConfig.teleport_totem_cooldown.get() * 20);
@@ -85,15 +85,6 @@ public class TeleportTotem extends Item {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-
-		if (enchantment.isAllowedOnBooks()) {
-			return false;
-		}
-
-		if (enchantment.isCompatibleWith(Enchantments.MENDING)) {
-			return false;
-		}
-
 		return false;
 	}
 
@@ -108,18 +99,18 @@ public class TeleportTotem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-			ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip,
+			TooltipFlag flagIn) {
 
-		if (NBTHelper.getBoolean(stack, "bound") == true) {
-			tooltip.add(new StringTextComponent("Stored destination ="));
-			tooltip.add(new StringTextComponent("X: " + NBTHelper.getInt(stack, "x")));
-			tooltip.add(new StringTextComponent("Y: " + NBTHelper.getInt(stack, "y")));
-			tooltip.add(new StringTextComponent("Z: " + NBTHelper.getInt(stack, "z")));
-			tooltip.add(new StringTextComponent("Right click to teleport."));
+		if (NBTHelper.getBoolean(stack, "bound")) {
+			tooltip.add(new TextComponent("Stored destination ="));
+			tooltip.add(new TextComponent("X: " + NBTHelper.getInt(stack, "x")));
+			tooltip.add(new TextComponent("Y: " + NBTHelper.getInt(stack, "y")));
+			tooltip.add(new TextComponent("Z: " + NBTHelper.getInt(stack, "z")));
+			tooltip.add(new TextComponent("Right click to teleport."));
 		} else {
-			tooltip.add(new StringTextComponent("Hold down sneak (shift) and then right"));
-			tooltip.add(new StringTextComponent("click to store your current location"));
+			tooltip.add(new TextComponent("Hold down sneak (shift) and then right"));
+			tooltip.add(new TextComponent("click to store your current location"));
 		}
 
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);

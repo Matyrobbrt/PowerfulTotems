@@ -6,39 +6,39 @@ import javax.annotation.Nullable;
 
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
 public class Cherry extends Item {
 
 	public Cherry() {
 		super(new Item.Properties().stacksTo(20).tab(TotemItemGroup.TOTEM_ITEM_GROUP).rarity(Rarity.COMMON)
-				.food(new Food.Builder().alwaysEat().nutrition(6).saturationMod(13.3F).build()));
+				.food(new FoodProperties.Builder().alwaysEat().nutrition(6).saturationMod(13.3F).build()));
 	}
 	
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
 		entity.heal(1F);
 		return super.finishUsingItem(stack, worldIn, entity);
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
 		
 		ItemStack stack = player.getItemInHand(hand);
 		
 		if (player.getHealth() == player.getMaxHealth()) {
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 		}
 		
 		return super.use(worldIn, player, hand);
@@ -46,9 +46,9 @@ public class Cherry extends Item {
 	
 	
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 
-		StringTextComponent text = new StringTextComponent("Eat to get half a heart worth of health.");
+		TextComponent text = new TextComponent("Eat to get half a heart worth of health.");
 		tooltip.add(text);
 		
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);

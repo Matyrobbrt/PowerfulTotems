@@ -6,18 +6,18 @@ import javax.annotation.Nullable;
 
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
 public class TotemOfDying extends Item {
 
@@ -27,7 +27,7 @@ public class TotemOfDying extends Item {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		
 		ItemStack stack = player.getItemInHand(hand);
 		
@@ -63,9 +63,9 @@ public class TotemOfDying extends Item {
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 
-		StringTextComponent text = new StringTextComponent("\u00A7b" + "Right click to " + "\u00A76" + "kill yourself" + "\u00A7b" + " !");
+		TextComponent text = new TextComponent("\u00A7b" + "Right click to " + "\u00A76" + "kill yourself" + "\u00A7b" + " !");
 		tooltip.add(text);
 		
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);

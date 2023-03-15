@@ -2,8 +2,8 @@ package com.matyrobbrt.powerfultotems.common.item.cores;
 
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 
 public class BasicCore extends Item {
 

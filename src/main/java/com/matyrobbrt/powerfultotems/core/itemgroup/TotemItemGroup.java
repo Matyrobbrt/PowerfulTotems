@@ -1,10 +1,10 @@
 package com.matyrobbrt.powerfultotems.core.itemgroup;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
-public class TotemItemGroup extends ItemGroup {
+public class TotemItemGroup extends CreativeModeTab {
 	
 	public static final TotemItemGroup TOTEM_ITEM_GROUP = new TotemItemGroup(TABS.length, "powerful_totems");
 

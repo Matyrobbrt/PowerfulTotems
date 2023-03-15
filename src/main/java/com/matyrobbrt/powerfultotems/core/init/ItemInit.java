@@ -8,10 +8,10 @@ import com.matyrobbrt.powerfultotems.common.item.cores.AdvancedCore;
 import com.matyrobbrt.powerfultotems.common.item.cores.BasicCore;
 import com.matyrobbrt.powerfultotems.common.item.cores.ReinforcedCore;
 
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ItemInit {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PowerfulTotems.MOD_ID);

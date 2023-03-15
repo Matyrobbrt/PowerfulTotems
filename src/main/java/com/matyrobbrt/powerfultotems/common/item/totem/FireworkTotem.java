@@ -1,125 +1,81 @@
 package com.matyrobbrt.powerfultotems.common.item.totem;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import com.google.common.collect.Lists;
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
-
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.FireworkRocketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
 @SuppressWarnings("unused")
-public class FireworkTotem extends Item {
+public class FireworkTotem extends BaseTotem {
 
-	public FireworkTotem() {
-		super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(256)
-				.rarity(Rarity.UNCOMMON));
-	}
+    public FireworkTotem() {
+        super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(256)
+                .rarity(Rarity.UNCOMMON));
+    }
 
-	// Remove Durability
-	public static void damageItem(ItemStack stack) {
-		int DamageValue = stack.getDamageValue() + 1;
-		stack.setDamageValue(DamageValue);
-		if (DamageValue == stack.getMaxDamage()) {
-			stack.shrink(1);
-		}
-	}
+    @Override
+    public void use(Level worldIn, Player player, ItemStack stack) {
+        if (!player.isShiftKeyDown()) {
+            FireworkRocketEntity fireworkRocket = new FireworkRocketEntity(worldIn, rocketCreate(), player);
+            fireworkRocket.shootFromRotation(player, player.xRotO, player.yRotO, 0.0F, 1.5F, 1.0F);
+            worldIn.addFreshEntity(fireworkRocket);
+            stack.hurtAndBreak(1, player, e -> {
+            });
+        } else if (player.isShiftKeyDown()) {
+            for (int i = 0; i <= 35; ++i) {
+                if (player.getInventory().getItem(i).getItem() == Items.FIREWORK_ROCKET) {
+                    if (player.getInventory().getItem(i).getCount() >= 16 && stack.getDamageValue() >= 16) {
+                        stack.setDamageValue(stack.getDamageValue() - 16);
+                        player.getInventory().getItem(i).shrink(16);
+                    } else if (stack.getDamageValue() != 0
+                            && player.getInventory().getItem(i).getCount() >= stack.getDamageValue()) {
+                        player.getInventory().getItem(i).shrink(stack.getDamageValue());
+                        stack.setDamageValue(0);
+                    } else if (stack.getDamageValue() != 0
+                            && player.getInventory().getItem(i).getCount() <= stack.getDamageValue()) {
+                        stack.setDamageValue(stack.getDamageValue() - player.getInventory().getItem(i).getCount());
+                        player.getInventory().getItem(i).shrink(player.getInventory().getItem(i).getCount());
+                    }
+                }
+            }
 
-	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+        }
+    }
 
-		ItemStack stack = player.getItemInHand(hand);
+    private ItemStack rocketCreate() {
+        ItemStack rocket = new ItemStack(Items.FIREWORK_ROCKET);
 
-		if (!player.isShiftKeyDown()) {
-			FireworkRocketEntity fireworkRocket = new FireworkRocketEntity(worldIn, rocketCreate(), player);
-			fireworkRocket.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
-			worldIn.addFreshEntity(fireworkRocket);
-			damageItem(stack);
-		} else if (player.isShiftKeyDown()) {
+        rocket.getOrCreateTagElement("Fireworks");
 
-			ResourceLocation firework_id = Items.FIREWORK_ROCKET.getRegistryName();
+        CompoundTag compoundnbt = rocket.getOrCreateTagElement("Fireworks");
 
-			for (int i = 0; i <= 35; ++i) {
+        ItemStack itemstack1 = new ItemStack(Items.FIREWORK_STAR);
 
-				if (player.inventory.getItem(i).getItem().getRegistryName() == firework_id) {
-					if (player.inventory.getItem(i).getCount() >= 16 && stack.getDamageValue() >= 16) {
-						stack.setDamageValue(stack.getDamageValue() - 16);
-						player.inventory.getItem(i).shrink(16);
-					} else if (stack.getDamageValue() != 0
-							&& player.inventory.getItem(i).getCount() >= stack.getDamageValue()) {
-						player.inventory.getItem(i).shrink(stack.getDamageValue());
-						stack.setDamageValue(0);
-					} else if (stack.getDamageValue() != 0
-							&& player.inventory.getItem(i).getCount() <= stack.getDamageValue()) {
-						stack.setDamageValue(stack.getDamageValue() - player.inventory.getItem(i).getCount());
-						player.inventory.getItem(i).shrink(player.inventory.getItem(i).getCount());
+        compoundnbt.putByte("Flight", (byte) 1);
 
-					}
-				}
+        return rocket;
 
-			}
+    }
 
-		}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return false;
+    }
 
-		return super.use(worldIn, player, hand);
-	}
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
 
-	private ItemStack rocketCreate() {
-
-		Random random = new Random();
-
-		ItemStack rocket = new ItemStack(Items.FIREWORK_ROCKET);
-
-		rocket.getOrCreateTagElement("Fireworks");
-
-		CompoundNBT compoundnbt = rocket.getTagElement("Fireworks");
-
-		ItemStack itemstack1 = new ItemStack(Items.FIREWORK_STAR);
-
-		compoundnbt.putByte("Flight", (byte) 1);
-
-		return rocket;
-
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-
-		if (enchantment.isAllowedOnBooks()) {
-			return false;
-		}
-
-		if (!enchantment.isCompatibleWith(Enchantments.MENDING)) {
-			return false;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public boolean isFireResistant() {
-		return true;
-	}
+    @Override
+    public boolean isFireResistant() {
+        return true;
+    }
 
 }

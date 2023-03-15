@@ -8,100 +8,78 @@ import com.matyrobbrt.powerfultotems.core.config.TotemConfig;
 import com.matyrobbrt.powerfultotems.core.helper.NBTHelper;
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
-public class GodTotem extends Item {
+public class GodTotem extends BaseTotem {
 
-	public GodTotem() {
-		super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(3)
-				.rarity(Rarity.EPIC));
-	}
+    public GodTotem() {
+        super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(3)
+                .rarity(Rarity.EPIC));
+    }
 
-	// Remove Durability
-	public static void damageItem(ItemStack stack) {
-		int DamageValue = stack.getDamageValue() + 1;
-		stack.setDamageValue(DamageValue);
-		if (DamageValue == stack.getMaxDamage()) {
-			stack.shrink(1);
-		}
-	}
+    @Override
+    public void use(Level world, Player player, ItemStack stack) {
+        if (!player.hasEffect(MobEffects.DAMAGE_RESISTANCE)) {
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+                    TotemConfig.god_totem_effect_duration.get() * 20, 4, true, true));
+            if (TotemConfig.god_totem_has_slowness.get()) {
+                player.addEffect(
+                        new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, TotemConfig.god_totem_effect_duration.get() * 20,
+                                TotemConfig.god_totem_slowness_level.get() - 1, true, true));
+            }
+            stack.hurtAndBreak(1, player, e -> {
+            });
+        } else if (player.hasEffect(MobEffects.DAMAGE_RESISTANCE)
+                && player.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() != 5) {
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+                    TotemConfig.god_totem_effect_duration.get() * 20, 4, true, true));
+            if (TotemConfig.god_totem_has_slowness.get()) {
+                player.addEffect(
+                        new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, TotemConfig.god_totem_effect_duration.get() * 20,
+                                TotemConfig.god_totem_slowness_level.get() - 1, true, true));
+            }
+        }
 
-	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+        NBTHelper.setBoolean(stack, "IsNotMagnetable", true);
+    }
 
-		ItemStack stack = player.getItemInHand(hand);
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return false;
+    }
 
-		if (!player.hasEffect(Effects.DAMAGE_RESISTANCE)) {
-			player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE,
-					TotemConfig.god_totem_effect_duration.get() * 20, 4, true, true));
-			if (TotemConfig.god_totem_has_slowness.get() == true) {
-				player.addEffect(
-						new EffectInstance(Effects.MOVEMENT_SLOWDOWN, TotemConfig.god_totem_effect_duration.get() * 20,
-								TotemConfig.god_totem_slowness_level.get() - 1, true, true));
-			}
-			damageItem(stack);
-		} else if (player.hasEffect(Effects.DAMAGE_RESISTANCE)
-				&& player.getEffect(Effects.DAMAGE_RESISTANCE).getAmplifier() != 5) {
-			player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE,
-					TotemConfig.god_totem_effect_duration.get() * 20, 4, true, true));
-			if (TotemConfig.god_totem_has_slowness.get() == true) {
-				player.addEffect(
-						new EffectInstance(Effects.MOVEMENT_SLOWDOWN, TotemConfig.god_totem_effect_duration.get() * 20,
-								TotemConfig.god_totem_slowness_level.get() - 1, true, true));
-			}
-		} 
-		
-		NBTHelper.setBoolean(stack, "IsNotMagnetable", true);
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
 
-		return super.use(worldIn, player, hand);
-	}
+    @Override
+    public boolean isFireResistant() {
+        return true;
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip,
+                                TooltipFlag flagIn) {
 
-		if (enchantment.isAllowedOnBooks()) {
-			return false;
-		}
+        TextComponent text = new TextComponent("\u00A7d" + "Right click to be " + "\u00A76" + "Invulnerable"
+                + "\u00A7d" + " for " + TotemConfig.god_totem_effect_duration.get() + " seconds.");
+        tooltip.add(text);
 
-		if (enchantment.isCompatibleWith(Enchantments.MENDING)) {
-			return false;
-		}
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
-		return false;
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public boolean isFireResistant() {
-		return true;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-			ITooltipFlag flagIn) {
-
-		StringTextComponent text = new StringTextComponent("\u00A7d" + "Right click to be " + "\u00A76" + "Invulnerable"
-				+ "\u00A7d" + " for " + TotemConfig.god_totem_effect_duration.get() + " seconds.");
-		tooltip.add(text);
-
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
-
-	}
+    }
 }

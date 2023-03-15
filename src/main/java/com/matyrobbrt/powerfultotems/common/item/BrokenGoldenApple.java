@@ -2,14 +2,14 @@ package com.matyrobbrt.powerfultotems.common.item;
 
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 public class BrokenGoldenApple extends Item {
 
@@ -18,7 +18,7 @@ public class BrokenGoldenApple extends Item {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
 		
 		ItemStack stack = player.getItemInHand(hand);
 		int randNumber = worldIn.random.nextInt(5) + 1;

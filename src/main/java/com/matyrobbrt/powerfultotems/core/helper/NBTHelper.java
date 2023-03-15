@@ -1,7 +1,7 @@
 package com.matyrobbrt.powerfultotems.core.helper;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
 public final class NBTHelper {
 
@@ -19,7 +19,7 @@ public final class NBTHelper {
 
 	public static void validateCompound(ItemStack stack) {
 		if (!stack.hasTag()) {
-			CompoundNBT tag = new CompoundNBT();
+			CompoundTag tag = new CompoundTag();
 			stack.setTag(tag);
 		}
 	}
@@ -32,7 +32,7 @@ public final class NBTHelper {
 		return stack.hasTag() ? getTagCompound(stack).getString(key) : "";
 	}
 
-	public static CompoundNBT getTagCompound(ItemStack stack) {
+	public static CompoundTag getTagCompound(ItemStack stack) {
 		validateCompound(stack);
 		return stack.getTag();
 	}

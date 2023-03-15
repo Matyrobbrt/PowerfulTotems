@@ -7,53 +7,42 @@ import javax.annotation.Nullable;
 import com.matyrobbrt.powerfultotems.core.helper.TotemHelper;
 import com.matyrobbrt.powerfultotems.core.itemgroup.TotemItemGroup;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 
 public class GluttonyTotem extends Item {
 
-	public GluttonyTotem() {
-		super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(500)
-				.rarity(Rarity.RARE));
-	}
+    public GluttonyTotem() {
+        super(new Item.Properties().stacksTo(1).setNoRepair().tab(TotemItemGroup.TOTEM_ITEM_GROUP).durability(500)
+                .rarity(Rarity.RARE));
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return false;
+    }
 
-		if (enchantment.isAllowedOnBooks()) {
-			return false;
-		}
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
 
-		if (enchantment.isCompatibleWith(Enchantments.MENDING)) {
-			return false;
-		}
+    @Override
+    public boolean isFireResistant() {
+        return true;
+    }
 
-		return false;
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public boolean isFireResistant() {
-		return true;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip,
-			ITooltipFlag flagIn) {
-
-		TotemHelper.coreTooltip(stack, worldIn, tooltip, flagIn);
-
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
-	}
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip,
+                                TooltipFlag flagIn) {
+        TotemHelper.coreTooltip(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    }
 
 }
